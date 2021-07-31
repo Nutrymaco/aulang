@@ -1,0 +1,15 @@
+const a = 5;
+const b = 12;
+
+fun f(arg1, arg2) {
+    print(arg1);
+    if (5 > 3) {
+        const c = arg1;
+    } else {
+        const c = arg2;
+    }
+
+    return c;
+}
+
+f(a, b);
