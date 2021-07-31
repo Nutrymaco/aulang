@@ -12,7 +12,7 @@ public class Main {
         var baseFrame = new Frame();
 
         var aInit = new ConstantInitExpression("a", new ConstantValue(5), baseFrame);
-        var bInit = new ConstantInitExpression("a", new ConstantValue(12), baseFrame);
+        var bInit = new ConstantInitExpression("b", new ConstantValue(12), baseFrame);
 
         var fFrame = new Frame(baseFrame);
         var funFInit = new FunctionInitExpression("f", List.of("arg1", "arg2"),
