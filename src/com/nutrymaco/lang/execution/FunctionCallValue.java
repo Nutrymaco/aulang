@@ -2,6 +2,7 @@ package com.nutrymaco.lang.execution;
 
 import java.util.List;
 
+// похоже на ReferenceValue, но с аргументами
 public class FunctionCallValue implements Value {
 
     private final String name;
@@ -10,9 +11,6 @@ public class FunctionCallValue implements Value {
 
     private final Frame frame;
 
-    // локальные переменные могут не скопироваться,
-    // подумать над ленивой инициализацией
-    // может какая-то система подписки на изменения парентового фрейма
     public FunctionCallValue(String name, List<Value> parameters, Frame frame) {
         this.name = name;
         this.parameters = parameters;
@@ -26,7 +24,7 @@ public class FunctionCallValue implements Value {
             frame.putOnStack(parameters.get(i));
         }
 
-        var functionValue = frame.getLocalValue(name);
+        var functionValue = frame.getFunction(name).apply(frame);
 
         return functionValue.get();
     }

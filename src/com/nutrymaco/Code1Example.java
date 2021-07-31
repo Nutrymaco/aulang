@@ -3,11 +3,12 @@ package com.nutrymaco;
 import com.nutrymaco.lang.execution.*;
 
 import java.util.List;
+import java.util.function.Function;
 
 import static com.nutrymaco.lang.execution.NativeFunctionCallExpression.NativeFunctionType.PRINT;
 
 
-public class Main {
+public class Code1Example {
     public static void main(String[] args) {
         var baseFrame = new Frame();
 
@@ -17,15 +18,16 @@ public class Main {
         var fFrame = new Frame(baseFrame);
         var funFInit = new FunctionInitExpression("f", List.of("arg1", "arg2"),
                 List.of(
-                        new NativeFunctionCallExpression(PRINT, List.of(new ReferenceValue("arg1", fFrame))),
-                        new IfElseExpression(
+                        frame -> new NativeFunctionCallExpression(PRINT, List.of(new ReferenceValue("arg1", frame))),
+                        frame -> new IfElseExpression(
                                 () -> true,
-                                List.of(new ConstantInitExpression("c", new ReferenceValue("arg1", fFrame), fFrame)),
-                                List.of(new ConstantInitExpression("c", new ReferenceValue("arg2", fFrame), fFrame))
+                                List.of(new ConstantInitExpression("c", new ReferenceValue("arg1", frame), frame)),
+                                List.of(new ConstantInitExpression("c", new ReferenceValue("arg2", frame), frame))
                         )
                 ),
-                new ReferenceValue("c", fFrame),
-                fFrame
+                frame -> new ReferenceValue("c", frame),
+                fFrame // < --- фрейм, в котором функция инициализируется
+                       // , чтобы она не была видна всем (что возможно не так критично)
                 );
 
 
