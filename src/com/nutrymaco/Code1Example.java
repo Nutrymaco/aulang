@@ -3,7 +3,6 @@ package com.nutrymaco;
 import com.nutrymaco.lang.execution.*;
 
 import java.util.List;
-import java.util.function.Function;
 
 import static com.nutrymaco.lang.execution.NativeFunctionCallExpression.NativeFunctionType.PRINT;
 

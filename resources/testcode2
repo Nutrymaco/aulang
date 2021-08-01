@@ -1,14 +1,20 @@
 fun fib(num) = {
-    if (num < 2) {
-        const fibRes = num;
+    if (num < 1) {
+        const fibRes = 1 - 1;
     } else {
-        const numMinusOne = num - 1;
-        const newFib = fib(numMinusOne);
-        const fibRes = num + newFib;
+        if (num < 3) {
+            const fibRes = 1;
+        } else {
+            const numMinusOne = num - 1;
+            const numMinusTwo = num - 2;
+            const fibMinusOne = fib(numMinusOne);
+            const fibMinusTwo = fib(numMinusTwo);
+            const fibRes = fibMinusOne + fibMinusTwo;
+        }
     }
     return fibRes;
 }
 
-const five = 5;
-const fibOfFive = fib(five);
-print(fibOfFive);
+const ten = 10;
+const fibOfTen = fib(ten);
+print(fibOfTen);
