@@ -11,7 +11,7 @@ THINGS THAT WE DONT TOLERATE:
 6) exceptions (no usage = no exceptions)
 8) type casting (one type = no type casting)
 9) for/while, because its ineffective
-10) syntax shugar, because we dont want you to use this
+10) syntax sugar, because we dont want you to use this
 11) usage of this languages
 
 some examples of programs:
