@@ -4,7 +4,7 @@ language inspired of my view of functional programming and two day off
 
 THINGS THAT WE DONT TOLERATE:
 1) null, so either 0
-2) carrying, ~~because some problems with parser~~
+2) currying, ~~because some problems with parser~~
 3) anonymous values
 4) using that languages
 
