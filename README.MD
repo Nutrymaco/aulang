@@ -6,7 +6,7 @@ THINGS THAT WE DONT TOLERATE:
 1) null, so either 0
 2) currying, ~~because some problems with parser~~
 3) anonymous values
-4) using that languages
+4) usage of this languages
 
 some examples of programs:
 
@@ -30,7 +30,7 @@ const one = 1;
 const minFromOneAndFive = minWithFive(one);
 print(minFromOneAndFive);
 
---------INPUT---------
+--------OUTPUT---------
 1.0
 ```
 
@@ -56,7 +56,7 @@ const ten = 10;
 const fibOfTen = fib(ten);
 print(fibOfTen);
 
---------INPUT---------
+--------OUTPUT---------
 55.0
 ```
 
@@ -87,7 +87,7 @@ fun squareMapper(n) = {
 const five = 5;
 const mapResult = map(five, squareMapper);
 print(mapResult);
---------INPUT---------
+--------OUTPUT---------
 25.0
 16.0
 9.0
