@@ -5,9 +5,7 @@ import com.nutrymaco.math.calculator.Calculator;
 import com.nutrymaco.math.calculator.Logicator;
 import com.nutrymaco.math.tree.VariableContext;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -22,6 +20,9 @@ public class Parser {
     private static final Pattern RETURN_VALUE_REGEX = Pattern.compile("return([a-zA-Z]+[0-9]*);}");
     private static final Pattern IF_ELSE_REGEX = Pattern.compile(".*if\\((.*)\\)\\{(.*)}else\\{(.*)}.*");
 
+    public static final Map<String, Function<Frame, Expression>> functionInits = new HashMap<>();
+    private static Map<String, List<String>> functionParameters = new HashMap<>();
+
     private final String code;
 
     private final List<Function<Frame, Expression>> expressions = new ArrayList<>();
@@ -35,6 +36,10 @@ public class Parser {
     public Parser(String code, Frame frame) {
         this.code = code;
         this.frame = frame;
+    }
+
+    public static String getFunParameterName(String funName, int parameterIndex) {
+        return functionParameters.get(funName).get(parameterIndex);
     }
 
     public void execute() {
@@ -89,7 +94,12 @@ public class Parser {
                             return new FunctionCallValue(
                                     funName,
                                     Arrays.stream(args)
-                                            .map(arg -> new ReferenceValue(arg, frame))
+                                            .map(arg -> {
+                                                if (functionInits.containsKey(arg)) {
+                                                    return new FunctionReferenceValue(arg, functionInits.get(arg));
+                                                }
+                                                return new ReferenceValue(arg, frame);
+                                            })
                                             .collect(Collectors.toList()),
                                     childFrame
                             );
@@ -125,7 +135,9 @@ public class Parser {
                 var funHeader = FUN_HEADER_REGEX.matcher(code.substring(index, code.indexOf(')', index) + 1));
                 funHeader.matches();
                 var funName = funHeader.group(1);
-                var funParameters = funHeader.group(2);
+                var funParameters = Arrays.stream(funHeader.group(2).split(","))
+                        .map(String::trim)
+                        .collect(Collectors.toList());
 
                 // find last } of function
                 int count = 1;
@@ -150,13 +162,13 @@ public class Parser {
 
                 Function<Frame, Parser> functionParser = frame -> new Parser(funRawLines.substring(0, funRawLines.indexOf("return")), new Frame(frame));
                 Function<Frame, Expression> functionInitExpression = frame -> new FunctionInitExpression(funName,
-                        Arrays.stream(funParameters.split(","))
-                                .map(String::trim)
-                                .collect(Collectors.toList()),
+                        funParameters,
                         functionParser.apply(frame).getExpressions(),
                         returnValue,
                         frame);
                 expressions.add(functionInitExpression);
+                functionInits.put(funName, functionInitExpression);
+                functionParameters.put(funName, funParameters);
             } else if (code.startsWith("print", index)) {
                 // function call
                 var args = code.substring(index + 6, code.indexOf(')', index)).split(",");

@@ -1,5 +1,7 @@
 package com.nutrymaco.lang.execution;
 
+import com.nutrymaco.lang.parsing.Parser;
+
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;

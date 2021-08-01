@@ -1,0 +1,26 @@
+fun map(n, mapper) = {
+    if (n < 1) {
+        const zero = 1 - 1;
+        const res = mapper(zero);
+    } else {
+        const mapped = mapper(n);
+        print(mapped);
+        const nMinusOne = n - 1;
+        const res = map(nMinusOne, mapper);
+    }
+    return res;
+}
+
+fun plusOneMapper(n) = {
+    const nPlusOne = n + 1;
+    return nPlusOne;
+}
+
+fun squareMapper(n) = {
+    const square = n * n;
+    return square;
+}
+
+const five = 5;
+const mapResult = map(five, squareMapper);
+print(mapResult);

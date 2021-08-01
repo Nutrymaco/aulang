@@ -1,5 +1,8 @@
 package com.nutrymaco.lang.execution;
 
+import com.nutrymaco.lang.parsing.Parser;
+
+import javax.swing.text.html.Option;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -93,7 +96,12 @@ public class Frame {
         return "Frame" + frameIndex + "{" +
                 "stackSize=" + stack.size() +
                 ", localValues=" + localValues.keySet() +
+                ", functions=" + functions.keySet() +
                 ", parentFrameIndex=" + (parentFrame == null? -1 : parentFrame.frameIndex) +
                 '}';
+    }
+
+    public Optional<Function<Frame, FunctionValue>> optGetFunction(String functionName) {
+        return Optional.ofNullable(functions.get(functionName));
     }
 }
