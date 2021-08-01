@@ -10,7 +10,8 @@ import java.nio.file.Path;
 public class CodeParseExample1 {
     public static void main(String[] args) throws IOException {
         var code = String.join("",
-                Files.readAllLines(Path.of("/Users/smykovefim/Documents/MyProjects/Java/aulang/resources/testcode")))
+                Files.readAllLines(Path.of("/Users/smykovefim/Documents/MyProjects/Java/aulang/resources/" +
+                        "testcode2")))
                 .replaceAll("[\s\t\r]", "");
         System.out.println(code);
         var parser = new Parser(code, new Frame());

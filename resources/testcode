@@ -1,9 +1,7 @@
-const a = 55;
-const b = 12;
-
 fun min(first, second) = {
     print(first);
     print(second);
+
     if (first < second) {
         const c = first;
     } else {
@@ -19,5 +17,6 @@ fun minWithFive(second) = {
     return res;
 }
 
-const lessThan5 = minWithFive(a);
-print(lessThan5);
+const one = 1;
+const minFromOneAndFive = minWithFive(one);
+print(minFromOneAndFive);

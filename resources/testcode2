@@ -1,0 +1,14 @@
+fun fib(num) = {
+    if (num < 2) {
+        const fibRes = num;
+    } else {
+        const numMinusOne = num - 1;
+        const newFib = fib(numMinusOne);
+        const fibRes = num + newFib;
+    }
+    return fibRes;
+}
+
+const five = 5;
+const fibOfFive = fib(five);
+print(fibOfFive);
