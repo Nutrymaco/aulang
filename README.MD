@@ -5,8 +5,14 @@ language inspired of my view of functional programming and two day off
 THINGS THAT WE DONT TOLERATE:
 1) null, so either 0
 2) currying, ~~because some problems with parser~~
-3) anonymous values
-4) usage of this languages
+3) anonymous values, because of readability
+4) reflection, because its unsafe
+5) OOP, because its hard :(
+6) exceptions (no usage = no exceptions)
+8) type casting (one type = no type casting)
+9) for/while, because its ineffective
+10) syntax shugar, because we dont want you to use this
+11) usage of this languages
 
 some examples of programs:
 
