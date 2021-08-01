@@ -1,9 +1,6 @@
 package com.nutrymaco.math.calculator;
 
-import com.nutrymaco.math.tree.CompareNode;
-import com.nutrymaco.math.tree.ExpressionNode;
-import com.nutrymaco.math.tree.LogicExpressionNode;
-import com.nutrymaco.math.tree.LogicSignNode;
+import com.nutrymaco.math.tree.*;
 
 import java.util.Iterator;
 import java.util.List;
@@ -12,10 +9,16 @@ public class Logicator extends AbstractCalculator {
     private final static char[] FIRST_LEVEL_DELIMITERS = new char[]{'|'};
     private final static char[] SECOND_LEVEL_DELIMITERS = new char[]{'&'};
 
+    private LogicExpressionNode lastBuiltNode;
+
+    public Logicator(VariableContext variableContext) {
+        super(variableContext);
+    }
 
     public LogicExpressionNode buildTree(String expression) {
         expression = prepareExpression(expression);
-        return buildFirstLevelNode(expression);
+        lastBuiltNode = buildFirstLevelNode(expression);
+        return lastBuiltNode;
     }
 
     private LogicExpressionNode buildFirstLevelNode(String expression) {
@@ -82,5 +85,9 @@ public class Logicator extends AbstractCalculator {
             }
         }
         return null;
+    }
+
+    public boolean getResult() {
+        return lastBuiltNode.calculate();
     }
 }

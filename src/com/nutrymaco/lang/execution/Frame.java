@@ -2,8 +2,13 @@ package com.nutrymaco.lang.execution;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class Frame {
+
+    private static int COUNT_OF_PARENT_FRAMES = 0;
+
+    private static int FRAMES_COUNT = 0;
 
     private final Map<String, Value> localValues;
 
@@ -13,21 +18,36 @@ public class Frame {
 
     private final List<Frame> childFrames = new ArrayList<>();
 
+    private final Frame parentFrame;
+
+    private final int frameIndex = FRAMES_COUNT++;
+
     public Frame(Frame parentFrame) {
         this.localValues = new HashMap<>(parentFrame.localValues);
+//        this.localValues = new HashMap<>();
         this.functions = new HashMap<>(parentFrame.functions);
         this.stack = new Stack<>();
         parentFrame.subscribe(this);
+        this.parentFrame = parentFrame;
     }
 
     public Frame() {
+        if (COUNT_OF_PARENT_FRAMES != 0) {
+            throw new IllegalStateException("only one parent frame allowed");
+        }
+        COUNT_OF_PARENT_FRAMES++;
         this.localValues = new HashMap<>();
         this.stack = new Stack<>();
         this.functions = new HashMap<>();
+        this.parentFrame = null;
     }
 
     public Value getLocalValue(String variableName) {
-        return localValues.get(variableName);
+        var value = localValues.get(variableName);
+        if (value == null) {
+            throw new IllegalArgumentException("not found variable '%s' on frame %s".formatted(variableName, this));
+        }
+        return value;
     }
 
     public Value getNextStackValue() {
@@ -53,10 +73,27 @@ public class Frame {
     }
 
     public Function<Frame, FunctionValue> getFunction(String name) {
-        return functions.get(name);
+        var function =  functions.get(name);
+        if (function == null) {
+            throw new IllegalArgumentException("cant find function '%s' in frame %s".formatted(name, this));
+        }
+        return function;
     }
 
     public void subscribe(Frame child) {
         childFrames.add(child);
+    }
+
+    public Stream<Map.Entry<String, Value>> localVariables() {
+        return localValues.entrySet().stream();
+    }
+
+    @Override
+    public String toString() {
+        return "Frame" + frameIndex + "{" +
+                "stackSize=" + stack.size() +
+                ", localValues=" + localValues.keySet() +
+                ", parentFrameIndex=" + (parentFrame == null? -1 : parentFrame.frameIndex) +
+                '}';
     }
 }

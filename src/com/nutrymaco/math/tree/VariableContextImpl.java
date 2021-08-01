@@ -3,16 +3,15 @@ package com.nutrymaco.math.tree;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VariableContext {
+public class VariableContextImpl implements VariableContext {
     Map<String, Double> values = new HashMap<>();
 
     public double getValueOfVariable(String varName) {
         return values.get(varName);
     }
 
-    public VariableContext setValue(String varName, double value){
+    public void setValue(String varName, double value){
         values.put(varName, value);
-        return this;
     }
 
     public void clear() {

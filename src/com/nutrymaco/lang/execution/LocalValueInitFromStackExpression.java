@@ -11,7 +11,6 @@ public class LocalValueInitFromStackExpression implements Expression {
         this.frame = frame;
     }
 
-
     @Override
     public void perform() {
         frame.putLocalValue(name, frame.getNextStackValue());

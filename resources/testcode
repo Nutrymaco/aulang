@@ -1,15 +1,23 @@
-const a = 5;
+const a = 55;
 const b = 12;
 
-fun f(arg1, arg2) = {
-    print(arg1);
-    if (5 > 3) {
-        const c = arg1;
+fun min(first, second) = {
+    print(first);
+    print(second);
+    if (first < second) {
+        const c = first;
     } else {
-        const c = arg2;
+        const c = second;
     }
 
     return c;
 }
 
-f(a, b);
+fun minWithFive(second) = {
+    const five = 5;
+    const res = min(five, second);
+    return res;
+}
+
+const lessThan5 = minWithFive(a);
+print(lessThan5);

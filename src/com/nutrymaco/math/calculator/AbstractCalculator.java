@@ -1,6 +1,7 @@
 package com.nutrymaco.math.calculator;
 
 import com.nutrymaco.math.tree.VariableContext;
+import com.nutrymaco.math.tree.VariableContextImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ public abstract class AbstractCalculator {
     final VariableContext variableContext;
 
     AbstractCalculator() {
-        this(new VariableContext());
+        this(new VariableContextImpl());
     }
 
     AbstractCalculator(VariableContext variableContext) {

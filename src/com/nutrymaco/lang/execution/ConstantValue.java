@@ -1,14 +1,14 @@
 package com.nutrymaco.lang.execution;
 
-public class ConstantValue implements Value {
-    private final Object object;
+public class ConstantValue<T> implements Value {
+    private final T object;
 
-    public ConstantValue(Object object) {
+    public ConstantValue(T object) {
         this.object = object;
     }
 
     @Override
-    public Object get() {
+    public T get() {
         return object;
     }
 

@@ -20,8 +20,7 @@ public class ReferenceValue implements Value {
     public String toString() {
         return "Ref{" +
                 "name='" + variableName + '\'' +
-                ", value='" + get() +
-                ", frame=" + frame.hashCode() +
+                ", frame=" + frame +
                 '}';
     }
 }

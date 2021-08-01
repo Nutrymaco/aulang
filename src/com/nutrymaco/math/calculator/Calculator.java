@@ -17,9 +17,7 @@ public class Calculator extends AbstractCalculator {
     private final static String VAR_REGEX = "[a-zA-Z]+";
     private final static String FUN_REGEX = "ROUND\\(.+";
 
-    public Calculator() {
-        super();
-    }
+    private ExpressionNode builtTree = null;
 
     public Calculator(VariableContext variableContext) {
         super(variableContext);
@@ -27,7 +25,15 @@ public class Calculator extends AbstractCalculator {
 
     public ExpressionNode buildTree(String expression) {
         expression = prepareExpression(expression);
-        return buildFirstLevel(expression);
+        builtTree = buildFirstLevel(expression);
+        return builtTree;
+    }
+
+    public double getResult() {
+        if (builtTree == null) {
+            throw new IllegalStateException("you should invoke build tree first");
+        }
+        return builtTree.calculate();
     }
 
     private ExpressionNode buildFirstLevel(String expression) {
